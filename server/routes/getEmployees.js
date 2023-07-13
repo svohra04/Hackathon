@@ -3,9 +3,10 @@ const router = express.Router()
 let Employees = require('../schemas/Employees')
 
 
-router.get('/', async(req, res)=>{
+router.post('/', async(req, res)=>{
     try{
-        const response = await Employees.find()
+        const searchParams = req.body;
+        const response = await Employees.find(searchParams)
         res.json(response)
     }
     catch(err){

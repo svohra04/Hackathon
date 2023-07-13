@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
-function SearchBar({ users, filters, onSearch }) {
+function SearchBar({ filters, onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("");
+  const [selectedSearch, setSelectedSearch] = useState("");
 
-  filters = ["Name","PhoneNumber"]
   const handleSearch = () => {
-    onSearch(searchQuery, selectedFilter);
+    onSearch(searchQuery, selectedSearch);
   };
 
   return (
@@ -19,10 +18,9 @@ function SearchBar({ users, filters, onSearch }) {
       />
 
       <select
-        value={selectedFilter}
-        onChange={(e) => setSelectedFilter(e.target.value)}
+        value={selectedSearch}
+        onChange={(e) => setSelectedSearch(e.target.value)}
       >
-        <option value="">All</option>
         {filters.map((filter) => (
           <option key={filter} value={filter}>
             {filter}
