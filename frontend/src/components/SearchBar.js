@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 function SearchBar({ filters, onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSearch, setSelectedSearch] = useState("");
+  // Update this to dynamically set default selected search
+  const [selectedSearch, setSelectedSearch] = useState("Name");
 
   const handleSearch = () => {
     onSearch(searchQuery, selectedSearch);
