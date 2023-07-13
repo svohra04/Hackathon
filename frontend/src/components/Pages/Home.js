@@ -2,6 +2,8 @@ import EmployeeList from "../EmployeeList";
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { EMPLOYEES_URL } from "../../api/urls";
+import SearchBar from "../SearchBar";
+import FilterComponent from "../FilterComponent";
 
 
 function Home() {
@@ -25,7 +27,9 @@ function Home() {
 
     return(
         <>
-        <EmployeeList />
+        <SearchBar />
+        <FilterComponent />
+        <EmployeeList employees={employees} filters={["jobRoles","location"]}/>
         <div>Homepage</div>
         </>
     )

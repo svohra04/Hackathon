@@ -1,0 +1,13 @@
+  /* CSS for Employee Items */
+  .tile {
+    align-self: center;
+    justify-self: center;
+    height: 300px;
+    margin: 3rem;
+    font-size: 14px;
+    border: 1px black solid;
+  }
+  
+  .tile a:hover {
+    text-decoration: underline;
+  }
