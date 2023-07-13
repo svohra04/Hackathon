@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const EmployeeSchema = new mongoose.Schema({
-    Name: {
+    name: {
         type: String,
         required: true,
     },
@@ -33,8 +33,13 @@ const EmployeeSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    employeeManager: {
+        type: String,
+        required: true
     }
 
 })
 
-module.exports = mongoose.model("Employee", EmployeeSchema)
+const collectionName = 'employees';
+module.exports = mongoose.model("Employee", EmployeeSchema, collectionName)
