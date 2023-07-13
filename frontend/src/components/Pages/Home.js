@@ -27,13 +27,16 @@ function Home() {
     }
 
     async function onSearch(searchQuery, selectedSearch) {
+        searchQuery = searchQuery.trim()
         let body = {}
 
-        if (selectedSearch === "Name") {
-            body["Name"] = searchQuery;
-        }
-        else if (selectedSearch === "Employee Number") {
-            body["EmployeeNumber"] = parseInt(searchQuery);
+        if (searchQuery !== "") {
+            if (selectedSearch === "Name") {
+                body["Name"] = searchQuery;
+            }
+            else if (selectedSearch === "Employee Number") {
+                body["EmployeeNumber"] = parseInt(searchQuery);
+            }
         }
 
         let fetchedEmployees = await fetchEmployees(body);
