@@ -7,15 +7,34 @@ router.post('/', async(req, res)=>{
 
     const validSearchParams = new Set(["Name","EmployeeNumber"])
 
-    try{
-        const searchParams = req.body;
-
-        for (let field in searchParams) {
+    function validate() {
+        for (let field in req.body) {
             if (!validSearchParams.has(field)) {
                 return res.status(400).send(`Invalid Search Body, Available Fields to Search on: [${Array.from(validSearchParams).join(", ")}]`);
             }
         }
-        const response = await Employees.find(searchParams)
+    }
+
+    function buildSearchBody() {
+        const searchParamBody = {};
+        for (let field in req.body) {
+            if (field === "Name") {
+                searchParamBody[field] = {"$regex": req.body[field], "$options": "i"}
+            }
+            else {
+                searchParamBody[field] = req.body[field]
+            }
+        }
+        return searchParamBody;
+    }
+
+    try{
+
+        const invalid = validate();
+        if (invalid) {return invalid}
+
+        const searchParamBody = buildSearchBody();
+        const response = await Employees.find(searchParamBody)
         res.json(response)
     }
     catch(err){
