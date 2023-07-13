@@ -3,13 +3,23 @@ const router = express.Router()
 let Employees = require('../schemas/Employees')
 
 
-router.get('/', async(req, res)=>{
+router.post('/', async(req, res)=>{
+
+    const validSearchParams = new Set(["Name","EmployeeNumber"])
+
     try{
-        const response = await Employees.find()
+        const searchParams = req.body;
+
+        for (let field in searchParams) {
+            if (!validSearchParams.has(field)) {
+                return res.status(400).send(`Invalid Search Body, Available Fields to Search on: [${Array.from(validSearchParams).join(", ")}]`);
+            }
+        }
+        const response = await Employees.find(searchParams)
         res.json(response)
     }
     catch(err){
-        res.status(500).send(`Error getting employee: ${err.message}`);
+        return res.status(err.status || 500).send(`Error getting employee: ${err.message}`);
     }
 
 })

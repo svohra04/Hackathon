@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-function SearchBar({ users, filters, onSearch }) {
+function SearchBar({ filters, onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("");
+  // Update this to dynamically set default selected search
+  const [selectedSearch, setSelectedSearch] = useState("Name");
 
-  filters = ["Name","PhoneNumber"]
   const handleSearch = () => {
-    onSearch(searchQuery, selectedFilter);
+    onSearch(searchQuery, selectedSearch);
   };
 
   return (
@@ -19,10 +19,9 @@ function SearchBar({ users, filters, onSearch }) {
       />
 
       <select
-        value={selectedFilter}
-        onChange={(e) => setSelectedFilter(e.target.value)}
+        value={selectedSearch}
+        onChange={(e) => setSelectedSearch(e.target.value)}
       >
-        <option value="">All</option>
         {filters.map((filter) => (
           <option key={filter} value={filter}>
             {filter}
