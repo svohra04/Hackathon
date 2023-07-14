@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React from "react";
 import EmployeeTile from "./EmployeeTile";
 import './style/EmployeeList.css';
 
-function EmployeeList({employees}) {
+function EmployeeList({employees, canViewSalary}) {
 
-    const navigate = useNavigate();
-
-    const employeesList = employees && employees.map(employee => <EmployeeTile key={employee._id} employee={employee} />
+    const employeesList = employees && employees.map( (employee) => {
+     return <EmployeeTile 
+        key={employee._id}
+        employee={employee} 
+        canViewSalary={canViewSalary}
+    /> }
     )
 
     return (

@@ -99,6 +99,16 @@ function Home() {
         setLoggedInUser(userData)
     }
 
+    function canViewSalary(employee) {
+        if (loggedInUser) {
+            const isSelf = (employee.EmployeeNumber === loggedInUser.EmployeeNumber);
+            const isManager = (employee.EmployeeManager === loggedInUser.EmployeeNumber)
+            const isHR = (loggedInUser.JobRole === "HR" || loggedInUser.JobRole === "Human Resources")
+            return isSelf || isManager || isHR;
+        }
+        return false;
+    }
+
     useEffect(() => {
         async function getInitialData() {
             getFilters();
@@ -125,7 +135,7 @@ function Home() {
             onSearch={onSearch}
             selectedFilters={selectedFilters}
             handleSelectedFilters={handleSelectedFilters} />
-        <EmployeeList employees={employees} filters={["jobRoles","location"]} />
+        <EmployeeList employees={employees} canViewSalary={canViewSalary} />
         </div>
         </>
     )
