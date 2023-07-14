@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 
-function FilterBox({ filters, onApplyFilters }) {
+function FilterBox({ filters, onSearch, selectedFilters, handleSelectedFilters }) {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState({});
 
   const handleFilterToggle = () => {
     setIsOpen(!isOpen);
   };
 
   const handleFilterSelection = (filterCategory, filterValue) => {
-    setSelectedFilters((prevSelectedFilters) => ({
+    handleSelectedFilters((prevSelectedFilters) => ({
       ...prevSelectedFilters,
       [filterCategory]: {
         ...(prevSelectedFilters[filterCategory] || {}),
@@ -20,7 +19,7 @@ function FilterBox({ filters, onApplyFilters }) {
   };
 
   const handleApply = () => {
-    onApplyFilters(selectedFilters);
+    onSearch();
     setIsOpen(false);
   };
 
