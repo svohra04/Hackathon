@@ -4,16 +4,23 @@ const { PythonShell } = require('python-shell');
 
 
 router.post('/predict-salary', async (req, res) => {
-    try {
+
+  let role = req.body["JobRole"]
+  let location = req.body["WorkLocation"]
+
+  console.log(role,location)
+  
+  try {
         let options = {
             mode: 'text',
             pythonOptions: ['-u'], // get print results in real-time
-            args: ['value1', 'value2', 'value3']
+            args: [role, location]
           };
           
           PythonShell.run('predict_salary.py', options).then(messages=>{
             // results is an array consisting of messages collected during execution
-            console.log('results: %j', messages);
+            let prediction = messages;
+            console.log("Prediction in express",prediction)
           });
           res.status(200).send("Done")
     }

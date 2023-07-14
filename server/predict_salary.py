@@ -6,19 +6,16 @@ import sys
 from sklearn.preprocessing import OneHotEncoder
 
 # # Load the trained model from the pickle file
-with open('Directory.pkl', 'rb') as file:
-    model = pickle.load(file)
+with open('DirectoryWithEncoder.pkl', 'rb') as file:
+    model, encoder = pickle.load(file)
 
 # # Define the list of unique states and job roles
 # # states = df['WorkLocation'].unique().tolist()
 # # roles = df['JobRole'].unique().tolist()
-print("SYS",sys.argv)
 
 # # Get the job role and work location from command-line arguments
-role = "HR"
-state = "NY"
-
-# print(role,state)
+role = sys.argv[1]
+state = sys.argv[2]
 
 # # # Validate the job role and work location
 # # if role not in roles:
@@ -33,8 +30,6 @@ state = "NY"
 user_input = [{'JobRole': role, 'WorkLocation': state}]
 new_search = pd.DataFrame(user_input)
 
-encoder = OneHotEncoder(sparse=False, drop='first')
-
 # # # Encode the user input using the same encoder used during training
 encode_search = pd.DataFrame(encoder.transform(new_search), columns=encoder.get_feature_names_out(['JobRole', 'WorkLocation']))
 
@@ -42,4 +37,4 @@ encode_search = pd.DataFrame(encoder.transform(new_search), columns=encoder.get_
 prediction = model.predict(encode_search)
 
 # # # Print the predicted salary
-print(f"Predicted salary for {role} in {state} is ", math.floor(prediction[0]))
+print(math.floor(prediction[0]))
