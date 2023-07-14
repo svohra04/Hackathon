@@ -3,17 +3,19 @@ const router = express.Router()
 const { PythonShell } = require('python-shell');
 
 
-// let Employees = require('../schemas/Employees')
-
-
 router.post('/predict-salary', async (req, res) => {
     try {
-        PythonShell.run('my_script.py', null).then(messages=>{
-            console.log('finished');
+        let options = {
+            mode: 'text',
+            pythonOptions: ['-u'], // get print results in real-time
+            args: ['value1', 'value2', 'value3']
+          };
+          
+          PythonShell.run('predict_salary.py', options).then(messages=>{
+            // results is an array consisting of messages collected during execution
+            console.log('results: %j', messages);
           });
-        res.status(200).send("Success")
-        // const jobRole = await Employees.distinct("JobRole");
-        // res.json(jobRole);
+          res.status(200).send("Done")
     }
     catch (err) {
         console.error(err);
