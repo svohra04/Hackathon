@@ -5,6 +5,7 @@ import { EMPLOYEES_URL, ROLE_URL, LOCATION_URL } from "../../api/urls";
 import SearchBar from "../SearchBar";
 import FilterBox from "../FilterBox";
 import '../style/Home.css'
+import NavBar from "../NavBar";
 
 
 function Home() {
@@ -13,6 +14,7 @@ function Home() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedSearch, setSelectedSearch] = useState("Name");
     const [selectedFilters, setSelectedFilters] = useState({});
+    const [loggedInUser, setLoggedInUser] = useState();
     const searchParams = ["Name","Employee Number"];
 
     async function fetchEmployees(body={}) {
@@ -93,6 +95,10 @@ function Home() {
     setSelectedFilters(filters)
     }
 
+    function handleUserUpdate(userData) {
+        setLoggedInUser(userData)
+    }
+
     useEffect(() => {
         async function getInitialData() {
             getFilters();
@@ -103,6 +109,8 @@ function Home() {
     }, []);
 
     return(
+        <>
+        <NavBar loggedInUser={loggedInUser} updateUser={handleUserUpdate}/>
         <div className='home'>
         <SearchBar 
             searchQuery={searchQuery}
@@ -119,6 +127,7 @@ function Home() {
             handleSelectedFilters={handleSelectedFilters} />
         <EmployeeList employees={employees} filters={["jobRoles","location"]} />
         </div>
+        </>
     )
 }
 
