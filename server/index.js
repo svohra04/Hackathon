@@ -3,12 +3,10 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+
 const getEmployees = require('./routes/getEmployees')
-// const createEmployee = require('./routes/createEmployee')
-// const updateEmployee = require('./routes/updateEmployee')
-// const deleteEmployee = require('./routes/deleteEmployee')
 const getEmployeeById = require('./routes/getEmployeeById')
-// const searchEmployee = require('./routes/searchEmployee')
+const getEmployeeByUsername = require('./routes/getEmployeeByUsername')
 const getJobRoles = require('./routes/getJobRoles')
 const getLocations = require('./routes/getLocations')
 
@@ -32,11 +30,8 @@ db.once("open", function () {
 
 
 app.use('/employees', getEmployees)
-// app.use('/employees', createEmployee)
-// app.use('/employees', updateEmployee)
-// app.use('/employees', deleteEmployee)
-// app.use('/searchemployee', searchEmployee)
 app.use('/employees', getEmployeeById)
+app.use('/employees', getEmployeeByUsername)
 app.use('/job-roles', getJobRoles)
 app.use('/locations', getLocations)
 
