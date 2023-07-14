@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import EmployeeTile from "./EmployeeTile";
-import './EmployeeList.css';
+import './style/EmployeeList.css';
 
 function EmployeeList({employees}) {
 
@@ -12,7 +12,6 @@ function EmployeeList({employees}) {
 
     return (
         <div>
-            Employee List
             <div className="employee-list">{employeesList}</div>
         </div>
     )
