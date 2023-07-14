@@ -47,7 +47,7 @@ function NavBar({ loggedInUser, updateUser }) {
                     </li>
                     <li key={1} onClick={handleClickProfile}>
                         <span className='nav-links'>Profile
-                        {loggedInUser && <span> : {loggedInUser.Username}</span>}
+                        {loggedInUser && <span>: {loggedInUser.Username}</span>}
                         </span>
                     </li>
 
