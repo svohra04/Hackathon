@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useState} from "react";
 import './EmployeeTile.css'
-import Modal from './Modal'
 import './Modal.css'
 
-function EmployeeTile({employee}) {
+function EmployeeTile({employee, canViewSalary}) {
 
     const[modal, setModal] = useState(false);
+    const[salary, setSalary] = useState(false);
 
     const toggleModal = () => {
+        if (modal === false) {
+            let canView = canViewSalary(employee)
+            setSalary(canView);
+        }
         setModal(!modal)
     }
 
@@ -41,7 +44,7 @@ function EmployeeTile({employee}) {
                     <div className='modal-data'><b>Job Role: </b>{employee.JobRole}</div>
                     <div className='modal-data'><b>Work Location: </b>{employee.WorkLocation}</div>
                     <div className='modal-data'><b>Employee Manager: </b>{employee.EmployeeManager}</div>
-                    <div className='modal-data'><b>Salary: </b>{employee.Salary}</div>
+                    <div className='modal-data'><b>Salary: </b>{salary ? employee.Salary : <span style={{ 'font-style': "italic"}}>Locked</span>}</div>
                 </div>
                 }
                     <button className='close-modal' onClick={toggleModal}>Close</button>
