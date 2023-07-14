@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
 import { EMPLOYEES_URL } from "../../api/urls";
 import SearchBar from "../SearchBar";
-import FilterComponent from "../FilterComponent";
+import FilterBox from "../FilterBox";
 
 
 function Home() {
     const [employees, setEmployees] = useState();
-    const filters = ["Name","Employee Number"];
+    const searchParams = ["Name","Employee Number"];
+    const filters = { "JobRoles": [1,2,3], "Location": [2,3,4]}
 
     async function getEmployees() {
         let fetchedEmployees = await fetchEmployees();
@@ -47,8 +48,8 @@ function Home() {
 
     return(
         <>
-        <SearchBar filters={filters} onSearch={onSearch}/>
-        <FilterComponent />
+        <SearchBar searchParams={searchParams} onSearch={onSearch}/>
+        <FilterBox filters={filters}/>
         <EmployeeList employees={employees} filters={["jobRoles","location"]}/>
         <div>Homepage</div>
         </>

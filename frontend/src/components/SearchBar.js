@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function SearchBar({ filters, onSearch }) {
+function SearchBar({ searchParams, onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSearch, setSelectedSearch] = useState("Name");
 
@@ -28,9 +28,9 @@ function SearchBar({ filters, onSearch }) {
         value={selectedSearch}
         onChange={(e) => setSelectedSearch(e.target.value)}
       >
-        {filters.map((filter) => (
-          <option key={filter} value={filter}>
-            {filter}
+        {searchParams.map((param) => (
+          <option key={param} value={param}>
+            {param}
           </option>
         ))}
       </select>
