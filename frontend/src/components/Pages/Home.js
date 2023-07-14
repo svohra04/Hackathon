@@ -117,7 +117,6 @@ function Home() {
             selectedFilters={selectedFilters}
             handleSelectedFilters={handleSelectedFilters} />
         <EmployeeList employees={employees} filters={["jobRoles","location"]} />
-        <div>Homepage</div>
         </>
     )
 }

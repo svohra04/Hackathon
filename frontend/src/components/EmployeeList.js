@@ -12,7 +12,6 @@ function EmployeeList({employees}) {
 
     return (
         <div>
-            Employee List
             <div className="employee-list">{employeesList}</div>
         </div>
     )
