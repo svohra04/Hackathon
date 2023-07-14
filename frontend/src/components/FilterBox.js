@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './style/FilterBox.css';
 
 function FilterBox({ filters, onSearch, selectedFilters, handleSelectedFilters }) {
 
@@ -26,12 +27,12 @@ function FilterBox({ filters, onSearch, selectedFilters, handleSelectedFilters }
   return (
     <div className="filter-container">
       <div className="filter-bar">
-        <button onClick={handleFilterToggle}>Filters</button>
+        <button onClick={handleFilterToggle} className="filter-button">Filters</button>
       </div>
       {isOpen && (
         <div className="filter-dropdown">
           {Object.keys(filters && filters).map((filterCategory) => (
-            <div key={filterCategory}>
+            <div key={filterCategory} className="filter-category">
               <h4>{filterCategory}</h4>
               {filters[filterCategory].map((filterValue) => (
                 <label key={filterValue}>
