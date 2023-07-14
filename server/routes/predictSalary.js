@@ -8,21 +8,20 @@ router.post('/predict-salary', async (req, res) => {
   let role = req.body["JobRole"]
   let location = req.body["WorkLocation"]
 
-  console.log(role,location)
-  
   try {
         let options = {
             mode: 'text',
-            pythonOptions: ['-u'], // get print results in real-time
+            pythonOptions: ['-u'],
             args: [role, location]
           };
           
           PythonShell.run('predict_salary.py', options).then(messages=>{
-            // results is an array consisting of messages collected during execution
-            let prediction = messages;
-            console.log("Prediction in express",prediction)
+            let prediction = messages[0];
+            let responseBody = {
+              "salaryPrediction": prediction
+            }
+            res.status(200).send(responseBody)
           });
-          res.status(200).send("Done")
     }
     catch (err) {
         console.error(err);
