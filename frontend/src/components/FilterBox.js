@@ -24,6 +24,10 @@ function FilterBox({ filters, onSearch, selectedFilters, handleSelectedFilters }
     setIsOpen(false);
   };
 
+  if (!filters) {
+    return null;
+  }
+
   return (
     <div className="filter-container">
       <div className="filter-bar">
@@ -31,7 +35,7 @@ function FilterBox({ filters, onSearch, selectedFilters, handleSelectedFilters }
       </div>
       {isOpen && (
         <div className="filter-dropdown">
-          {Object.keys(filters && filters).map((filterCategory) => (
+          {Object.keys(filters).map((filterCategory) => (
             <div key={filterCategory} className="filter-category">
               <h4>{filterCategory}</h4>
               {filters[filterCategory].map((filterValue) => (
