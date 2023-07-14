@@ -22,7 +22,8 @@
   
   .logo {
     width: 20px;
-    margin-right: 5px; /* Add this line to provide spacing between the logo and the text */
+    margin-left: 10px; /* Add this line to provide spacing between the logo and the text */
+    filter: invert(1);
   }
   
   .nav-menu {
