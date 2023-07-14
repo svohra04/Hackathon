@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { EMPLOYEES_URL, ROLE_URL, LOCATION_URL } from "../../api/urls";
 import SearchBar from "../SearchBar";
 import FilterBox from "../FilterBox";
+import '../style/Home.css'
 
 
 function Home() {
@@ -102,7 +103,7 @@ function Home() {
     }, []);
 
     return(
-        <>
+        <div className='home'>
         <SearchBar 
             searchQuery={searchQuery}
             handleSearchQuery={handleSearchQuery}
@@ -117,7 +118,7 @@ function Home() {
             selectedFilters={selectedFilters}
             handleSelectedFilters={handleSelectedFilters} />
         <EmployeeList employees={employees} filters={["jobRoles","location"]} />
-        </>
+        </div>
     )
 }
 
