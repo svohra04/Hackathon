@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const getEmployees = require('./routes/getEmployees')
 const getEmployeeById = require('./routes/getEmployeeById')
 const getEmployeeByUsername = require('./routes/getEmployeeByUsername')
+const predictSalary = require('./routes/predictSalary')
 const getJobRoles = require('./routes/getJobRoles')
 const getLocations = require('./routes/getLocations')
 
@@ -32,8 +33,8 @@ db.once("open", function () {
 app.use('/employees', getEmployees)
 app.use('/employees', getEmployeeById)
 app.use('/employees', getEmployeeByUsername)
+app.use('/employees', predictSalary)
 app.use('/job-roles', getJobRoles)
 app.use('/locations', getLocations)
-
 
 app.listen(3100, ()=>console.log('server started in port 3100'))
