@@ -9,6 +9,9 @@ const getEmployees = require('./routes/getEmployees')
 // const deleteEmployee = require('./routes/deleteEmployee')
 const getEmployeeById = require('./routes/getEmployeeById')
 // const searchEmployee = require('./routes/searchEmployee')
+const getJobRoles = require('./routes/getJobRoles')
+const getLocations = require('./routes/getLocations')
+
 const cors = require("cors");
 
 app.use(cors());
@@ -34,6 +37,8 @@ app.use('/employees', getEmployees)
 // app.use('/employees', deleteEmployee)
 // app.use('/searchemployee', searchEmployee)
 app.use('/employees', getEmployeeById)
+app.use('/job-roles', getJobRoles)
+app.use('/locations', getLocations)
 
 
 app.listen(3100, ()=>console.log('server started in port 3100'))

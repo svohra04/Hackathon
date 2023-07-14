@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import './style/SearchBar.css'
 
-function SearchBar({ filters, onSearch }) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedSearch, setSelectedSearch] = useState("Name");
+function SearchBar({ searchQuery, handleSearchQuery, selectedSearch, handleSelectedSearch, searchParams, onSearch }) {
 
   const handleSearch = () => {
     onSearch(searchQuery, selectedSearch);
@@ -15,27 +14,29 @@ function SearchBar({ filters, onSearch }) {
   };
 
   return (
-    <div>
+    <div className='search-container'>
       <input
+        className='search-input'
         type="text"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => handleSearchQuery(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="Search..."
       />
 
       <select
+        className='search-options'
         value={selectedSearch}
-        onChange={(e) => setSelectedSearch(e.target.value)}
+        onChange={(e) => handleSelectedSearch(e.target.value)}
       >
-        {filters.map((filter) => (
-          <option key={filter} value={filter}>
-            {filter}
+        {searchParams.map((param) => (
+          <option key={param} value={param} className='search-option'>
+            {param}
           </option>
         ))}
       </select>
 
-      <button onClick={handleSearch}>Search</button>
+      <button className='search-button' onClick={handleSearch}>Search</button>
     </div>
   );
 }

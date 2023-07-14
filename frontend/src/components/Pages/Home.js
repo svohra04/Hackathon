@@ -1,19 +1,18 @@
 import EmployeeList from "../EmployeeList";
 import React, { useState, useEffect } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
-import { EMPLOYEES_URL } from "../../api/urls";
+import { EMPLOYEES_URL, ROLE_URL, LOCATION_URL } from "../../api/urls";
 import SearchBar from "../SearchBar";
-import FilterComponent from "../FilterComponent";
+import FilterBox from "../FilterBox";
 
 
 function Home() {
     const [employees, setEmployees] = useState();
-    const filters = ["Name","Employee Number"];
-
-    async function getEmployees() {
-        let fetchedEmployees = await fetchEmployees();
-        setEmployees(fetchedEmployees);
-      }
+    const [filters, setFilters] = useState();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedSearch, setSelectedSearch] = useState("Name");
+    const [selectedFilters, setSelectedFilters] = useState({});
+    const searchParams = ["Name","Employee Number"];
 
     async function fetchEmployees(body={}) {
         let result = await fetch(EMPLOYEES_URL, {
@@ -26,31 +25,98 @@ function Home() {
         return result.json();
     }
 
-    async function onSearch(searchQuery, selectedSearch) {
-        searchQuery = searchQuery.trim()
+    async function onSearch() {
+        let searchQry = searchQuery.trim()
         let body = {}
 
-        if (searchQuery !== "") {
+        if (searchQry !== "") {
             if (selectedSearch === "Name") {
-                body["Name"] = searchQuery;
+                body["Name"] = searchQry;
             }
             else if (selectedSearch === "Employee Number") {
-                body["EmployeeNumber"] = parseInt(searchQuery);
+                body["EmployeeNumber"] = parseInt(searchQry);
             }
         }
 
-        let fetchedEmployees = await fetchEmployees(body);
-        setEmployees(fetchedEmployees);
+        let filteredEmployees = await fetchEmployees(body);
+
+        const allFilteredValues = {};
+        for (const filterCategory in selectedFilters) {
+            let filterValues = selectedFilters[filterCategory];
+            let trueValues = Object.keys(filterValues).filter(
+                (value) => filterValues[value]
+            );
+
+            if (trueValues.length > 0) {
+                allFilteredValues[filterCategory] = trueValues;
+            }
+        }
+
+        if (Object.keys(allFilteredValues).length > 0) {
+            for (const filterCategory in allFilteredValues) {
+                filteredEmployees = filteredEmployees.filter((emp) => {
+                    let value = emp[filterCategory]
+                    let res = allFilteredValues[filterCategory].includes(value)
+                    return res
+                });
+            }
+
+        }
+
+        setEmployees(filteredEmployees);
     }
 
-    useEffect(() => getEmployees, []);
+    async function getFilters() {
+        let jobRolesRes = await fetch(ROLE_URL);
+        let locationsRes = await fetch(LOCATION_URL);
+
+        let jobRoles = await jobRolesRes.json();
+        let locations = await locationsRes.json();
+
+        let filters = {
+            "JobRole": jobRoles,
+            "WorkLocation": locations
+        }
+        setFilters(filters)
+    }
+
+    function handleSearchQuery(value) {
+    setSearchQuery(value);
+    }
+    
+    function handleSelectedSearch(value) {
+    setSelectedSearch(value);
+    }
+
+    function handleSelectedFilters(filters) {
+    setSelectedFilters(filters)
+    }
+
+    useEffect(() => {
+        async function getInitialData() {
+            getFilters();
+            let fetchedEmployees = await fetchEmployees();
+            setEmployees(fetchedEmployees);
+        }
+        getInitialData()
+    }, []);
 
     return(
         <>
-        <SearchBar filters={filters} onSearch={onSearch}/>
-        <FilterComponent />
-        <EmployeeList employees={employees} filters={["jobRoles","location"]}/>
-        <div>Homepage</div>
+        <SearchBar 
+            searchQuery={searchQuery}
+            handleSearchQuery={handleSearchQuery}
+            selectedSearch={selectedSearch}
+            handleSelectedSearch={handleSelectedSearch}
+            searchParams={searchParams} 
+            onSearch={onSearch} 
+        />
+        <FilterBox
+            filters={filters}
+            onSearch={onSearch}
+            selectedFilters={selectedFilters}
+            handleSelectedFilters={handleSelectedFilters} />
+        <EmployeeList employees={employees} filters={["jobRoles","location"]} />
         </>
     )
 }
