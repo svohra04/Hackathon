@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 function FilterBox({ filters, onApplyFilters }) {
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({});
 
@@ -19,7 +20,7 @@ function FilterBox({ filters, onApplyFilters }) {
   };
 
   const handleApply = () => {
-    // onApplyFilters(selectedFilters);
+    onApplyFilters(selectedFilters);
     setIsOpen(false);
   };
 
@@ -30,7 +31,7 @@ function FilterBox({ filters, onApplyFilters }) {
       </div>
       {isOpen && (
         <div className="filter-dropdown">
-          {Object.keys(filters).map((filterCategory) => (
+          {Object.keys(filters && filters).map((filterCategory) => (
             <div key={filterCategory}>
               <h4>{filterCategory}</h4>
               {filters[filterCategory].map((filterValue) => (

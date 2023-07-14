@@ -1,18 +1,19 @@
 import EmployeeList from "../EmployeeList";
 import React, { useState, useEffect } from "react";
 // import { useParams, useNavigate } from "react-router-dom";
-import { EMPLOYEES_URL } from "../../api/urls";
+import { EMPLOYEES_URL, ROLE_URL, LOCATION_URL } from "../../api/urls";
 import SearchBar from "../SearchBar";
 import FilterBox from "../FilterBox";
 
 
 function Home() {
     const [employees, setEmployees] = useState();
+    const [filters, setFilters] = useState();
     const searchParams = ["Name","Employee Number"];
-    const filters = { "JobRoles": [1,2,3], "Location": [2,3,4]}
 
     async function getEmployees() {
         let fetchedEmployees = await fetchEmployees();
+        getFilters();
         setEmployees(fetchedEmployees);
       }
 
@@ -44,13 +45,49 @@ function Home() {
         setEmployees(fetchedEmployees);
     }
 
+    async function getFilters() {
+        let jobRolesRes = await fetch(ROLE_URL);
+        let locationsRes = await fetch(LOCATION_URL);
+
+        let jobRoles = await jobRolesRes.json();
+        let locations = await locationsRes.json();
+
+        let filters = {
+            "JobRole": jobRoles,
+            "WorkLocation": locations
+        }
+        setFilters(filters)
+    }
+
+    function onApplyFilters(selectedFilters) {
+        let filteredEmployees = employees;
+
+        // Apply each filter
+        for (const filterCategory in selectedFilters) {
+            let filterValues = selectedFilters[filterCategory];
+            let trueValues = Object.keys(filterValues).filter(
+                (value) => filterValues[value]
+            );
+
+            filteredEmployees = filteredEmployees.filter((emp) => {
+                let value = emp[filterCategory]
+                let res = trueValues.includes(value)
+                return res
+            });
+
+        }
+
+        setEmployees(filteredEmployees);
+      }
+      
+
     useEffect(() => getEmployees, []);
 
     return(
         <>
-        <SearchBar searchParams={searchParams} onSearch={onSearch}/>
-        <FilterBox filters={filters}/>
-        <EmployeeList employees={employees} filters={["jobRoles","location"]}/>
+        <SearchBar searchParams={searchParams} onSearch={onSearch} />
+        <FilterBox filters={filters} onApplyFilters={onApplyFilters} />
+        <EmployeeList employees={employees} filters={["jobRoles","location"]} />
         <div>Homepage</div>
         </>
     )
