@@ -6,7 +6,8 @@ import './style/NavBar.css'
 function NavBar() {
 
     function handleClickProfile() {
-        alert("Clicked")
+        let username = prompt("Login with Username")
+        console.log("Username:",username)
     }
 
     return (
