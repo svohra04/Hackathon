@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import './Modal.css';
-import EmployeeTile from "./EmployeeTile";
-import Employee from "./Pages/Employee";
 
 export default function Modal() {
     const[modal, setModal] = useState(false);
