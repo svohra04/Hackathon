@@ -2,11 +2,16 @@ import React, { useState } from "react";
 
 function SearchBar({ filters, onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-  // Update this to dynamically set default selected search
   const [selectedSearch, setSelectedSearch] = useState("Name");
 
   const handleSearch = () => {
     onSearch(searchQuery, selectedSearch);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
@@ -15,6 +20,7 @@ function SearchBar({ filters, onSearch }) {
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        onKeyPress={handleKeyPress}
         placeholder="Search..."
       />
 
