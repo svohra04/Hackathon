@@ -20,6 +20,11 @@
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-bar button:hover {
+    background-color: #cccccc;
 }
 
 .filter-dropdown {
@@ -33,7 +38,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-wrap: wrap;
-    max-height: 200px;
+    max-height: 250px;
     overflow-y: auto;
 }
 
@@ -66,4 +71,14 @@
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-dropdown button:hover {
+    background-color: #cccccc;
+}
+
+h4 {
+    text-align:center;
+    font-size: 5px;
 }
