@@ -9,3 +9,5 @@ export const EMPLOYEES_USERNAME_URL = `${EMPLOYEES_URL}/username`
 export const ROLE_URL = `${BASE_SERVER_URL}/job-roles`
 
 export const LOCATION_URL = `${BASE_SERVER_URL}/locations`
+
+export const PREDICT_SALARY_URL = `${EMPLOYEES_URL}/predict-salary`

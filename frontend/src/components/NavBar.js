@@ -1,10 +1,10 @@
+import React from "react";
 import { EMPLOYEES_USERNAME_URL } from '../api/urls';
 import { ReactComponent as Logo } from './media/address-book-solid.svg';
 import './style/NavBar.css'
 
 
-
-function NavBar({ loggedInUser, updateUser }) {
+function NavBar({ loggedInUser, updateUser, handleClickPredict }) {
 
     function handleClickProfile() {
         if (loggedInUser) {
@@ -37,12 +37,9 @@ function NavBar({ loggedInUser, updateUser }) {
         <nav className="navbar">
                 <h1 className="navbar-logo">
                     <a href="/">Enterprise Directory <Logo className="logo" style={{color: "#ffffff"}}/></a>
-                </h1>        
-                <div className="menu-icon">
-                    {/* <i className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i> */}
-                </div>
+                </h1>
                 <ul className={'nav-menu'}>
-                    <li key={0}>
+                    <li key={0} onClick={handleClickPredict}>
                         <span className='nav-links'>Predict Salary</span>
                     </li>
                     <li key={1} onClick={handleClickProfile}>
