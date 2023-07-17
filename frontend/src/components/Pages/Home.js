@@ -6,6 +6,7 @@ import SearchBar from "../SearchBar";
 import FilterBox from "../FilterBox";
 import '../style/Home.css'
 import NavBar from "../NavBar";
+import PredictSalaryModal from "../PredictSalaryModal";
 
 
 function Home() {
@@ -15,6 +16,8 @@ function Home() {
     const [selectedSearch, setSelectedSearch] = useState("Name");
     const [selectedFilters, setSelectedFilters] = useState({});
     const [loggedInUser, setLoggedInUser] = useState();
+    const [predictModal, setPredictModal] = useState(false);
+
     const searchParams = ["Name","Employee Number"];
 
     async function fetchEmployees(body={}) {
@@ -109,6 +112,17 @@ function Home() {
         return false;
     }
 
+    const togglePredictModal = () => {
+        setPredictModal(!predictModal)
+    }
+
+    if (predictModal) {
+        document.body.classList.add('active-modal')
+    }
+    else {
+        document.body.classList.remove('active-modal')
+    }
+
     useEffect(() => {
         async function getInitialData() {
             getFilters();
@@ -120,7 +134,15 @@ function Home() {
 
     return(
         <>
-        <NavBar loggedInUser={loggedInUser} updateUser={handleUserUpdate}/>
+        <NavBar loggedInUser={loggedInUser} updateUser={handleUserUpdate} handleClickPredict={togglePredictModal} />
+        {predictModal && 
+        <PredictSalaryModal 
+            modal={predictModal}
+            toggleModal={togglePredictModal}
+            jobRoles={filters["JobRole"]}
+            workLocations={filters["WorkLocation"]}
+            />
+        }
         <div className='home'>
         <SearchBar 
             searchQuery={searchQuery}
