@@ -1,0 +1,11 @@
+.pagination-bar {
+    /* display: inline; */
+    padding: 0;
+    text-align: center
+}
+
+.pagination-item {
+    display: inline;
+    border: 1px solid black;
+    margin: 0 5px 0 5px;
+}

@@ -7,10 +7,12 @@ import FilterBox from "../FilterBox";
 import '../style/Home.css'
 import NavBar from "../NavBar";
 import PredictSalaryModal from "../PredictSalaryModal";
+import Pagination from "../Pagination";
 
 
 function Home() {
     const [employees, setEmployees] = useState();
+    const [pageNumber, setPageNumber] = useState(0);
     const [filters, setFilters] = useState();
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedSearch, setSelectedSearch] = useState("Name");
@@ -21,6 +23,11 @@ function Home() {
     const searchParams = ["Name","Employee Number"];
 
     async function fetchEmployees(body={}) {
+        let pageLimit = 40
+        let offset = pageLimit * pageNumber
+
+        body["offset"] = offset
+        body["limit"] = pageLimit
         let result = await fetch(EMPLOYEES_URL, {
             method: "POST",
             headers: { 
@@ -158,6 +165,7 @@ function Home() {
             selectedFilters={selectedFilters}
             handleSelectedFilters={handleSelectedFilters} />
         <EmployeeList employees={employees} canViewSalary={canViewSalary} />
+        <Pagination pageNumber={pageNumber} totalPages={[1,2,3,4,5,6,7,8]} />
         </div>
         </>
     )
